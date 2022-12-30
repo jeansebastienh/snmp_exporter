@@ -127,9 +127,6 @@ mibs: mib-dir \
   $(MIBDIR)/PDU-MIB.txt \
   $(MIBDIR)/Infrapower-MIB.mib \
   $(MIBDIR)/LIEBERT_GP_PDU.MIB \
-  $(MIBDIR)/EATON-EPDU-MIB.txt \
-  $(MIBDIR)/EATON-SENSOR-MIB.txt \
-  $(MIBDIR)/EATON-OIDS.txt \
   $(MIBDIR)/CyberPower.MIB
 
 mib-dir:
