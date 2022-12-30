@@ -51,6 +51,9 @@ EATON_OIDS_URL    := https://raw.githubusercontent.com/librenms/librenms/master/
 CYBERPOWER_VERSION := 2.10
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
 
+EAP_VERSION := 1.0
+EAP_URL     := http://static.tp-link.com/EAP_Private_Mibs_$(EAP_VERSION).zip
+
 .DEFAULT: all
 
 .PHONY: all
@@ -127,7 +130,8 @@ mibs: mib-dir \
   $(MIBDIR)/PDU-MIB.txt \
   $(MIBDIR)/Infrapower-MIB.mib \
   $(MIBDIR)/LIEBERT_GP_PDU.MIB \
-  $(MIBDIR)/CyberPower.MIB
+  $(MIBDIR)/CyberPower.MIB \
+  $(MIBDIR)/EAP.MIB
 
 mib-dir:
 	@mkdir -p -v $(MIBDIR)
@@ -330,4 +334,13 @@ $(MIBDIR)/CyberPower.MIB:
 	@curl $(CURL_OPTS) -o $(TMP) $(CYBERPOWER_URL)
 	@unzip -j -d $(MIBDIR) $(TMP) CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB
 	@mv -v $(MIBDIR)/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB $@
+	@rm -v $(TMP)
+
+
+$(MIBDIR)/EAP.MIB:
+	$(eval TMP := $(shell mktemp))
+	@echo ">> Downloading EAP.MIB to $(TMP)"
+	@curl $(CURL_OPTS) -o $(TMP) $(EAP_URL)
+	@unzip -j -d $(MIBDIR) $(TMP) EAP_Private-Mibs_$(EAP_VERSION)/TPLINK.mib
+	@mv -v $(MIBDIR)/TPLINK.mib $@
 	@rm -v $(TMP)
